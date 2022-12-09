@@ -50,12 +50,15 @@ def setUserConf(user_id:'int|str',keyConf:str,val:any):  # type: ignore
         originalConf = [{"uid":{}},{"gid":{}}]
         writeInto(fileName,originalConf)
     tmpConf = readOut(fileName)
-    tmpLst = tmpConf[0]["uid"][str(user_id)] or {}
+    try:
+        tmpLst = tmpConf[0]["uid"][str(user_id)]
+    except KeyError:
+        tmpLst = tmpConf[0]["uid"][str(user_id)] = {}
     tmpLst[keyConf] = val
     # TODO(简律纯/2022年12月9日): 多配置项的更改.
     writeInto(fileName,tmpConf)
 
-def getUserConf(user_id:'int|str',keyConf:str,perhapsVal:None) -> any:  # type: ignore
+def getUserConf(user_id:'int|str',keyConf:str,perhapsVal=None) -> any:  # type: ignore
     """获取用户配置
     
     @user_id : int|str
@@ -97,7 +100,10 @@ def setGroupConf(group_id:'int|str',keyConf:str,val:any):  # type: ignore
         originalConf = [{"uid":{}},{"gid":{}}]
         writeInto(fileName,originalConf)
     tmpConf = readOut(fileName)
-    tmpLst = tmpConf[1]["gid"][str(group_id)] or {}
+    try:
+        tmpLst = tmpConf[0]["uid"][str(user_id)]
+    except KeyError:
+        tmpLst = tmpConf[0]["uid"][str(user_id)] = {}
     tmpLst[keyConf] = val
     # TODO(简律纯/2022年12月9日): 多配置项的更改.
     writeInto(fileName,tmpConf)
