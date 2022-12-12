@@ -138,6 +138,3 @@ def getGroupConf(group_id:'int|str',keyConf:str,perhapsVal=None) -> any:  # type
         return tmpConf[1]["gid"][str(group_id)][keyConf]
     except KeyError:
         return perhapsVal
-
-setUserConf(275,"stat",True)
-print(getUserConf(275,"stat",True))
