@@ -22,15 +22,14 @@ import os
 
 FILE_NAME = './user/UserConf.dat'
         
-def writeInto(_file:str,_obj:any,_mode='wb'):  # type: ignore    
+def writeInto(_file:str,_obj:any,_mode='wb'):    # type: ignore    
     """写入文件"""
     try:
         os.mkdir('user')
     except FileExistsError:
         pass
-    file = open(_file,_mode)
-    pickle.dump(_obj,file)
-    file.close()
+    with open(_file,_mode) as file:
+        pickle.dump(_obj,file)
 
 def readOut(_file:str,_mode='rb'):
     """读取文件"""
@@ -38,9 +37,8 @@ def readOut(_file:str,_mode='rb'):
         os.mkdir('user')
     except FileExistsError:
         pass
-    file = open(_file,_mode)
-    tmpOut = pickle.load(file)
-    file.close()
+    with open(_file,_mode) as file:
+        tmpOut = pickle.load(file)
     return tmpOut
 
 def setUserConf(user_id:'int|str',keyConf:str,val:any):  # type: ignore    
